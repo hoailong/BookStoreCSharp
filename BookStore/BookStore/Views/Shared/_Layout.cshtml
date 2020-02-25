@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" type="image/x-icon" href="~/images/favicon.png">
+    <!-- Add local styles, mostly for plugins css file -->
+    @if (IsSectionDefined("Styles"))
+    {@RenderSection("Styles", required: false)}
+
+    <environment names="Development">
+
+        <link href="~/lib/css/bootstrap/bootstrap.min.css" rel="stylesheet">
+        <link href="~/lib/font-awesome/css/font-awesome.css" rel="stylesheet">
+        <!-- Toastr style -->
+        <link href="~/lib/css/toastr/toastr.min.css" rel="stylesheet">
+        <!-- Gritter -->
+        @*<link href="~/lib/css/gritter/jquery.gritter.css" rel="stylesheet">*@
+        <link href="~/lib/css/iCheck/custom.css" rel="stylesheet" />
+        <link href="~/lib/css/dataTables/datatables.min.css" rel="stylesheet">
+        <link href="~/lib/css//steps/jquery.steps.css" rel="stylesheet">
+        <link href="~/lib/css/datapicker/datepicker3.css" rel="stylesheet">
+        <link href="~/lib/css/select2/select2.min.css" rel="stylesheet">
+        <link href="~/lib/css/select2-bootstrap/select2-bootstrap.css" rel="stylesheet">
+        <link href="~/lib/css/sweetalert/sweetalert.css" rel="stylesheet">
+        <link href="~/lib/css/daterangepicker/daterangepicker-bs3.css" rel="stylesheet">
+        <link href="~/css/animate.css" rel="stylesheet">
+        <link href="~/css/style.css" rel="stylesheet">
+    </environment>
+
+
+
+    @*@Html.ApplicationInsightsJavaScript(TelemetryConfiguration)*@
+</head>
+<body>
+    <!-- Wrapper-->
+    @*<div id="wrapper" class="@Html.PageClass()">*@
+    <div id="wrapper" class="">
+
+        <!-- Navigation -->
+        @Html.Partial("_Navigation")
+
+        <!-- Page wraper -->
+        <div id="page-wrapper" class="gray-bg">
+            <div class="sk-spinner sk-spinner-three-bounce">
+                <div class="sk-bounce1"></div>
+                <div class="sk-bounce2"></div>
+                <div class="sk-bounce3"></div>
+            </div>
+
+            <!-- Top Navbar -->
+            @Html.Partial("_TopNavbar")
+
+            <!-- Breadcrumb -->
+            @Html.Partial("_Breadcrumb")
+
+            <!-- Main view  -->
+            @RenderBody()
+
+            <!-- Footer -->
+            @Html.Partial("_Footer")
+
+        </div>
+        <!-- End page wrapper-->
+
+    </div>
+    <!-- End wrapper-->
+
+    <environment names="Development">
+        <!-- Mainly scripts -->
+        <script src="~/lib/js/jquery/jquery-3.1.1.min.js"></script>
+        <script src="~/lib/js/bootstrap/bootstrap.js"></script>
+        <script src="~/lib/js/metisMenu/jquery.metisMenu.js"></script>
+        <script src="~/lib/js/slimscroll/jquery.slimscroll.min.js"></script>
+        <script src="~/lib/js/dataTables/datatables.min.js"></script>
+
+        <!-- Custom and plugin javascript -->
+        <script src="~/js/inspinia.js"></script>
+        <script src="~/lib/js/pace/pace.min.js"></script>
+
+        <!-- Toastr -->
+        <script src="~/lib/js/toastr/toastr.min.js"></script>
+
+        <!-- Steps -->
+        <script src="~/lib/js/steps/jquery.steps.min.js"></script>
+
+        <!-- iCheck -->
+        <script src="~/lib/js/iCheck/icheck.min.js"></script>
+
+        <!-- Jquery Validate -->
+        <script src="~/lib/js/validate/jquery.validate.min.js"></script>
+
+        <!-- Data picker -->
+        <script src="~/lib/js/datapicker/bootstrap-datepicker.js"></script>
+
+        <!-- Select2 -->
+        <script src="~/lib/js/select2/select2.full.min.js"></script>
+
+        <!-- Nestable List -->
+        <script src="~/lib/js/nestable/jquery.nestable.js"></script>
+
+        <!-- Moment -->
+        <script src="~/lib/js/moment/moment.js"></script>
+
+        <!-- Sweet alert -->
+        <script src="~/lib/js/sweetalert/sweetalert.min.js"></script>
+
+        <!-- Date range picker -->
+        <script src="~/lib/js/daterangepicker/daterangepicker.js"></script>
+
+
+        <script src="~/javascript/base.js"></script>
+        <script>
+            var g_user =  JSON.parse('@Html.Raw(ViewBag.User)');
+            $(document).ready(function () {
+                toastr.options = {
+                    closeButton: true,
+                    progressBar: true,
+                    showMethod: 'slideDown',
+                    timeOut: 2000
+                };
+
+                $('.i-checks').iCheck({
+                    checkboxClass: 'icheckbox_square-green',
+                    radioClass: 'iradio_square-green',
+                });
+
+                $.fn.select2.defaults.set("theme", "bootstrap");
+
+
+                $('#date-time .input-group.date').datepicker({
+                    todayBtn: "linked",
+                    keyboardNavigation: false,
+                    forceParse: false,
+                    calendarWeeks: true,
+                    autoclose: true,
+                    format: 'dd/mm/yyyy'
+                });
+
+                $('.page-heading h2').text(document.title);
+
+                var pathname = window.location.pathname;
+                $('#side-menu').find('li').each(function () {
+                    if ($(this).find('a').attr('href') === pathname) {
+                        $(this).addClass('active');
+                        $(this).closest('ul').addClass('in');
+                        $(this).parent().parent().addClass('active');
+                        $('.breadcrumb strong').text($(this).text());
+                        if ($(this).closest('ul').hasClass('nav-second-level')) {
+                            $('.breadcrumb a').text($(this).closest('ul').siblings('a').find('.nav-label').text());
+                        } else {
+                            $('.breadcrumb a').text('Home');
+                        }
+                    }
+                });
+                $('#user-fullname').text(g_user.EmployeeName);
+                $('#user-fullname-top').text(g_user.EmployeeName);
+                $('#user-role').html(`${g_user.Role} <b class="caret"></b>`);
+                $('#user-employeeId').text(g_user.EmployeeId);
+                if (g_user.Role !== 'Admin' && g_user.Role !== 'Boss') {
+                    $('#management').addClass('hidden');
+                }
+
+            });
+        </script>
+    </environment>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,63 @@
+﻿@model IEnumerable<BookRent>
+@{
+    ViewData["Title"] = "Danh sách sách truyện đang thuê ";
+}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Sách truyện đang thuê</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Config option 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <table class="table table-hover table-bordered" id="rentting-table">
+                        <thead>
+                            <tr>
+                                <th width="10%">STT</th>
+                                <th width="30%">Mã sách</th>
+                                <th width="30%">Tên sách</th>
+                                <th width="30%">Số lượng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @*@foreach (BookRent book in Model)
+                                {
+                                    <tr id="@book.BookId">
+                                        <td>1</td>
+                                        <td class="book-id">@book.BookId</td>
+                                        <td class="book-name">@book.BookId</td>
+                                        <td class="book-quant">@book.Count</td>
+                                    </tr>
+
+                                }*@
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script src="~/javascript/report/rentting.js"></script>
+}

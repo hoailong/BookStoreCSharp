@@ -1,0 +1,128 @@
+﻿@model IEnumerable<Test>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-sm-4">
+        <h2>This is main title</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="index.html">This is</a>
+            </li>
+            <li class="active">
+                <strong>Breadcrumb</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-sm-8">
+        <div class="title-action">
+            <a href="" class="btn btn-primary">This is action area</a>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content">
+    @*<div class="middle-box text-center animated fadeInRightBig">
+        <h3 class="font-bold">This is page content</h3>
+        <div class="error-desc">
+            You can create here any grid layout you want. And any variation layout you imagine:) Check out
+            main dashboard and other site. It use many different layout.
+            <br /><a href="index.html" class="btn btn-primary m-t">Dashboard</a>
+        </div>
+    </div>*@
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Basic Table</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Config option 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Old</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>1000</td>
+                                <td>Otto</td>
+                                <td>19</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>1001</td>
+                                <td>Thornton</td>
+                                <td>22</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>1001</td>
+                                <td>the Bird</td>
+                                <td>15</td>
+                            </tr>
+                            @foreach (var test in Model)
+                            {
+                                <tr>
+                                    <td>4</td>
+                                    <td>@test.id</td>
+                                    <td>@test.name</td>
+                                    <td>@test.old</td>
+                                </tr>
+
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts {
+    @*<script>
+    $(document).ready(function () {
+        let data = {
+            id: 1005,
+            name: "Phan Van hoai",
+            old: 20,
+            Phone: "0969543024"
+        };
+        console.log(data);
+        $.ajax({
+            url: '@Url.Action("SetData", "Home")',
+            type: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            dataType: "json"
+        }).done((resp) => {
+            console.log(resp);
+        });
+    });
+    </script>*@
+}

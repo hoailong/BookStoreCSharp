@@ -1,0 +1,249 @@
+﻿@model IEnumerable<Book>
+@{
+    ViewData["Title"] = "Sách";
+}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Thể loại</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li>
+                                <a href="#">Config option 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="bookNameSearch">Lĩnh vực:</label>
+                                <input type="text" placeholder="Nhập tên sách..." id="bookNameSearch" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="categorySearch">Lĩnh vực:</label>
+                                <select class="form-control" id="categorySearch">
+                                    <option value="">Tất cả</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="authorSearch">Tác giả:</label>
+                                <select class="form-control" id="authorSearch">
+                                    <option value="">Tất cả</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label for="publisherSearch">Nhà xuất bản:</label>
+                                <select class="form-control" id="publisherSearch">
+                                    <option value="">Tất cả</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="btn-search"><i class="fa fa-search" aria-hidden="true"></i> Tìm kiếm</button>
+                    <button type="button" class="btn btn-primary" id="btn-create"><i class="fa fa-plus" aria-hidden="true"></i> Thêm mới</button>
+                    <button type="button" class="btn" id="btn-refresh"><i class="fa fa-refresh" aria-hidden="true"></i> Làm mới</button>
+                    <button type="button" class="btn btn-danger" id="btn-delete-mul"><i class="fa fa-ban" aria-hidden="true"></i> Xóa</button>
+                    <div class="row">
+                        @*<div class="col-sm-6 m-b-xs">
+                            <button type="button" class="btn btn-danger" id="btn-delete-mul"><i class="fa fa-ban" aria-hidden="true"></i> Xóa</button>
+                            <button type="button" class="btn btn-primary" id="btn-create"><i class="fa fa-plus" aria-hidden="true"></i> Thêm mới</button>
+                            <button type="button" class="btn btn-primary" id="btn-search"><i class="fa fa-search" aria-hidden="true"></i> Tìm kiếm</button>
+                        </div>*@
+                        @*<div class="col-md-4 col-md-offset-4">
+                <div class="input-group">
+                    <input type="text" placeholder="Nhập tên sách..." id="categoryNameSearch" class="form-control">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i> Tìm kiếm</button>
+                    </span>
+                </div>
+            </div>*@
+                    </div>
+                    <br />
+                    <table class="table table-hover table-striped table-bordered" id="book-table">
+                        <thead>
+                            <tr>
+                                <th width="5%" style="text-align: center">
+                                    <input type="checkbox" class="i-checks" id="check-all">
+                                </th>
+                                <th width="5%">#</th>
+                                <th width="10">Tên sách</th>
+                                <th width="10%">Ảnh</th>
+                                <th width="10%">Tác giả</th>
+                                <th width="10%">NXB</th>
+                                <th width="5%">Lĩnh vực</th>
+                                <th width="5%">Ngôn ngữ</th>
+                                <th width="5%">Số trang</th>
+                                <th width="5%">Tổng số</th>
+                                <th width="5%">SL hiện tại</th>
+                                <th width="5%">Loại</th>
+                                <th width="5%">Giá<br />(VNĐ)</th>
+                                <th width="5%">Giá thuê<br />(VNĐ)</th>
+                                <th width="10%" style="text-align: center">Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+
+                </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="book-modal" class="modal fade" role="dialog" >
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Sách</h4>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" class="form-control" id="bookId">
+                <div class="form-group">
+                    <label for="bookName">Tên sách:</label>
+                    <input type="text" class="form-control" id="bookName">
+                </div>
+                <div class="form-group">
+                    <label for="image">Ảnh:</label>
+                    <input type="file" class="form-control" id="upload-image">
+                    <div>
+                        <img src="~/upload/book/not-found.png" class="img-lg" id="image-book" alt="Book Image">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="categoryId">Lĩnh vực:</label>
+                            <select class="form-control" id="categoryId">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="publisherId">Nhà xuất bản:</label>
+                            <select class="form-control" id="publisherId">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="langId">Ngôn ngữ:</label>
+                            <select class="form-control" id="langId">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label for="typeId">Loại:</label>
+                            <select class="form-control" id="typeId">
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="authorId">Tác giả:</label>
+                            <select class="form-control" id="authorId">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="price">Giá sách:</label>
+                            <input type="number" class="form-control" id="price">
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="rentPrice">Giá thuê:</label>
+                            <input type="number" class="form-control" id="rentPrice">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="page">Số trang:</label>
+                            <input type="number" class="form-control" id="page">
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="total">Tổng số lượng:</label>
+                            <input type="number" class="form-control" id="total">
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label for="quantity">SL hiện tại:</label>
+                            <input type="number" class="form-control" id="quantity">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btn-save" class="btn btn-primary">Lưu</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div id="confirm-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Xóa khách hàng</h4>
+            </div>
+            <input type="hidden" class="form-control" id="bookIdDel">
+            <div class="modal-body">
+                Bạn có chắc muốn xóa?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="btn-delete">Xóa</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/javascript/book.js"></script>
+}
